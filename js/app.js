@@ -1,6 +1,10 @@
+let search = document.querySelector("#searchInp");
 let section = document.querySelector("#mainSec .row");
 let category = document.querySelectorAll(".category-btn");
 let countGame = document.querySelector("#totalGame");
+let notFoundMsg = document.querySelector("not-found-msg");
+let searchArr = [];
+
 // game class
 class Game {
   constructor(id, title, img, platform, genre, publisher, developer, desc) {
@@ -16,7 +20,6 @@ class Game {
 }
 
 async function getGames(currentCategory) {
-  console.log("hallo");
   const options = {
     method: "GET",
     headers: {
@@ -29,12 +32,56 @@ async function getGames(currentCategory) {
     let req = await fetch(url, options);
     let response = await req.json();
     display(response);
+    search.addEventListener("keyup", function () {
+      value = search.value;
+      displaySearch(response, value.toLowerCase());
+      searchContent = "";
+      for (let i = 0; i < searchArr.length; i++) {
+        searchContent += `<div class="col-md-4">
+        <div class="card main-card bg-dark text-white" data-tilt>
+        <div class="card-body">
+        <div class="img-container mb-4">
+        <img
+        src="${searchArr[i].img}"
+        width="100%"
+        class="rounded-2"
+        alt="" />
+        </div>
+        <div
+        class="game-details d-flex justify-content-between px-1 mb-2">
+        <p>${searchArr[i].title}</p>
+        <p class="bg-success px-3 py-1 rounded-pill">Free</p>
+        </div>
+        <div class="game-desc px-2">
+        <p>
+        ${searchArr[i].desc}
+        </p>
+        </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+        <span>${searchArr[i].genre}</span>
+        <span>${searchArr[i].platform}</span>
+        </div>
+        </div>
+        </div>`;
+      }
+      section.innerHTML = searchContent;
+      countGame.innerHTML = `Total Of Games : ${searchArr.length}`;
+      if (searchArr.length < 1) {
+        section.innerHTML = ` <div class="col-12">
+            <div class="not-found pt-5 d-flex flex-column justify-content-center align-items-center">
+              <img src="img/flat-design-no-data-illustration.png" mt-5 mb-3 width="200" alt="">
+              <h1 class="text-white">Not found</h1>
+            </div>
+          </div>`;
+      }
+    });
   } catch (error) {
     console.log(error);
   }
 }
 // display main content
-getGames("shooter")
+getGames("shooter");
 
 // display content
 function display(response) {
@@ -51,6 +98,7 @@ function display(response) {
       response[i].developer,
       response[i].short_description
     );
+
     content += `<div class="col-md-4">
     <div class="card main-card bg-dark text-white" data-tilt>
     <div class="card-body">
@@ -79,7 +127,6 @@ function display(response) {
     </div>
     </div>`;
     countGame.innerHTML = `Total Of Games : ${i + 1}`;
-
   }
   section.innerHTML = content;
   VanillaTilt.init(document.querySelectorAll(".card"), {
@@ -103,3 +150,23 @@ category.forEach(function (e) {
     e.classList.add("text-black");
   });
 });
+
+function displaySearch(res, search) {
+  let searchGame;
+  for (let i = 0; i < res.length; i++) {
+    searchGame = new Game(
+      res[i].id,
+      res[i].title,
+      res[i].thumbnail,
+      res[i].platform,
+      res[i].genre,
+      res[i].publisher,
+      res[i].developer,
+      res[i].short_description
+    );
+    if (searchGame.title.toLowerCase().startsWith(search.toLowerCase())) {
+      searchArr.unshift(searchGame);
+    }
+  }
+}
+console.log(searchArr);
