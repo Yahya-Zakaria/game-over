@@ -136,10 +136,10 @@ function display(response) {
   }
   section.innerHTML = content;
   VanillaTilt.init(document.querySelectorAll(".card"), {
-    max: 7,
-    speed: 150,
+    max: 3,
+    speed: 80,
     glare: true,
-    "max-glare": 0.5,
+    "max-glare": 0.2,
   });
 }
 
