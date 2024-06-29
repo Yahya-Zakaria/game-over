@@ -100,7 +100,7 @@ body {
 .games-section {
   background-color: #272b30;
   box-shadow: 0px -30px 30px 10px #272b30;
-  padding: 50px 0 40px !important;
+  padding: 50px 0 100px !important;
 }
 .card-footer {
   padding: 10px 15px;
@@ -115,16 +115,18 @@ body {
 }
 .card .img-container img {
   opacity: 0.5;
-  transition: all .3s;
-
+  transition: all 0.3s;
 }
-.card:hover .img-container img{
-    opacity: 1;
+.card:hover .img-container img {
+  opacity: 1;
 }
-.card-body{
+.card-body {
   height: 430px;
 }
-.not-found-msg{
+.not-found-msg {
+  height: 100vh;
+}
+.not-found-cont{
   height: 100vh;
 }
 .loader {
@@ -139,7 +141,7 @@ body {
   animation: l15 1s infinite linear;
 }
 .loader::before,
-.loader::after {    
+.loader::after {
   content: "";
   grid-area: 1/1;
   margin: 2px;
@@ -151,7 +153,9 @@ body {
   margin: 8px;
   animation-duration: 3s;
 }
-@keyframes l15{ 
-  100%{transform: rotate(1turn)}
+@keyframes l15 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
 /* end main style */
