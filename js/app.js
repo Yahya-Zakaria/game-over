@@ -1,3 +1,4 @@
+let search_Btn = document.querySelector("#searchIcon");
 let search = document.querySelector("#searchInp");
 let section = document.querySelector("#mainSec .row");
 let category = document.querySelectorAll(".category-btn");
@@ -32,48 +33,53 @@ async function getGames(currentCategory) {
     let req = await fetch(url, options);
     let response = await req.json();
     display(response);
-    search.addEventListener("keyup", function () {
-      value = search.value;
-      displaySearch(response, value.toLowerCase());
-      searchContent = "";
-      for (let i = 0; i < searchArr.length; i++) {
-        searchContent += `<div class="col-md-4">
-        <div class="card main-card bg-dark text-white" data-tilt>
-        <div class="card-body">
-        <div class="img-container mb-4">
-        <img
-        src="${searchArr[i].img}"
-        width="100%"
-        class="rounded-2"
-        alt="" />
-        </div>
-        <div
-        class="game-details d-flex justify-content-between px-1 mb-2">
-        <p>${searchArr[i].title}</p>
-        <p class="bg-success px-3 py-1 rounded-pill">Free</p>
-        </div>
-        <div class="game-desc px-2">
-        <p>
-        ${searchArr[i].desc}
-        </p>
-        </div>
-        </div>
-        <div class="card-footer d-flex justify-content-between">
-        <span>${searchArr[i].genre}</span>
-        <span>${searchArr[i].platform}</span>
-        </div>
-        </div>
-        </div>`;
-      }
-      section.innerHTML = searchContent;
-      countGame.innerHTML = `Total Of Games : ${searchArr.length}`;
-      if (searchArr.length < 1) {
-        section.innerHTML = ` <div class="col-12">
-            <div class="not-found pt-5 d-flex flex-column justify-content-center align-items-center">
-              <img src="img/flat-design-no-data-illustration.png" mt-5 mb-3 width="200" alt="">
-              <h1 class="text-white">Not found</h1>
-            </div>
+    searchBtn.addEventListener("click", function () {
+      if (search_Btn.classList.contains("search")) {
+        let value = search.value;
+        if (searchArr.length > 0) {
+          searchArr.length = 0;
+        }
+        displaySearch(response, value.toLowerCase());
+        searchContent = "";
+        for (let i = 0; i < searchArr.length; i++) {
+          searchContent += `<div class="col-md-4">
+          <div class="card main-card bg-dark text-white" data-tilt>
+          <div class="card-body">
+          <div class="img-container mb-4">
+          <img
+          src="${searchArr[i].img}"
+          width="100%"
+          class="rounded-2"
+          alt="" />
+          </div>
+          <div
+          class="game-details d-flex justify-content-between px-1 mb-2">
+          <p>${searchArr[i].title}</p>
+          <p class="bg-success px-3 py-1 rounded-pill">Free</p>
+          </div>
+          <div class="game-desc px-2">
+          <p>
+          ${searchArr[i].desc}
+          </p>
+          </div>
+          </div>
+          <div class="card-footer d-flex justify-content-between">
+          <span>${searchArr[i].genre}</span>
+          <span>${searchArr[i].platform}</span>
+          </div>
+          </div>
           </div>`;
+        }
+        section.innerHTML = searchContent;
+        countGame.innerHTML = `Total Of Games : ${searchArr.length}`;
+        if (searchArr.length < 1) {
+          section.innerHTML = ` <div class="col-12">
+              <div class="not-found vh-100 pt-0 d-flex flex-column justify-content-center align-items-center">
+                <img src="img/flat-design-no-data-illustration.png" mt-1 mb-3 width="200" alt="">
+                <h1 class="text-white">Not found</h1>
+              </div>
+            </div>`;
+        }
       }
     });
   } catch (error) {
@@ -130,10 +136,10 @@ function display(response) {
   }
   section.innerHTML = content;
   VanillaTilt.init(document.querySelectorAll(".card"), {
-    max: 5,
-    speed: 100,
+    max: 7,
+    speed: 150,
     glare: true,
-    "max-glare": 0.3,
+    "max-glare": 0.5,
   });
 }
 
@@ -169,4 +175,3 @@ function displaySearch(res, search) {
     }
   }
 }
-console.log(searchArr);
