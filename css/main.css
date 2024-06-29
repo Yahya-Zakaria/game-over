@@ -70,6 +70,15 @@ body {
   line-height: 1;
   transition: width 0.3s ease-in-out, background-color 0.3s;
 }
+.search-icon{
+  background-color: black;
+  margin-right: 100px;
+  padding:7px 20px ;
+  transform: translateX(-55%);
+  color: white;
+  border-radius: 20px;
+  transition: all .2s;
+}
 /* end  navbar style*/
 
 /* start category style */
@@ -100,7 +109,7 @@ body {
 .games-section {
   background-color: #272b30;
   box-shadow: 0px -30px 30px 10px #272b30;
-  padding: 50px 0 100px !important;
+  padding: 50px 0 250px !important;
 }
 .card-footer {
   padding: 10px 15px;
@@ -126,9 +135,7 @@ body {
 .not-found-msg {
   height: 100vh;
 }
-.not-found-cont{
-  height: 100vh;
-}
+
 .loader {
   width: 50px;
   aspect-ratio: 1;
@@ -159,3 +166,5 @@ body {
   }
 }
 /* end main style */
+
+
